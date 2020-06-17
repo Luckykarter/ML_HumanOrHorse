@@ -52,12 +52,12 @@ model = tf.keras.models.Sequential([
     # 3
     tf.keras.layers.Conv2D(64, (3, 3), activation=tf.nn.relu),
     tf.keras.layers.MaxPooling2D(2, 2),
-    # 4
-    tf.keras.layers.Conv2D(64, (3, 3), activation=tf.nn.relu),
-    tf.keras.layers.MaxPooling2D(2, 2),
+    # 4 and 5 are tremoved because size of pictures decreased
+    # tf.keras.layers.Conv2D(64, (3, 3), activation=tf.nn.relu),
+    # tf.keras.layers.MaxPooling2D(2, 2),
     # 5
-    tf.keras.layers.Conv2D(64, (3, 3), activation=tf.nn.relu),
-    tf.keras.layers.MaxPooling2D(2, 2),
+   # tf.keras.layers.Conv2D(64, (3, 3), activation=tf.nn.relu),
+   # tf.keras.layers.MaxPooling2D(2, 2),
     # flatten the image
     tf.keras.layers.Flatten(),
     # 512 connected neurons
@@ -120,7 +120,7 @@ while(img_paths):
 
     for file in img_paths:
         img = image.load_img(
-            file, target_size=(300, 300)
+            file, target_size=(150, 150)
         )
         x = image.img_to_array(img)
         x = np.expand_dims(x, axis=0)
