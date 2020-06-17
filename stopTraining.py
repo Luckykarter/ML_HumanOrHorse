@@ -10,5 +10,5 @@ class stopTraining(Callback):
             accuracy = logs.get('accuracy')
         if accuracy > self.accuracy:
             print("Reached accuracy {}% - stopped training".
-                  format(self.accuracy/100))
+                  format(self.accuracy*100))
             self.model.stop_training = True

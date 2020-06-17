@@ -44,7 +44,7 @@ printImages(show_images, "Random Validation Images")
 
 model = tf.keras.models.Sequential([
     # 1
-    tf.keras.layers.Conv2D(16, (3, 3), activation=tf.nn.relu, input_shape=(300, 300, 3)),
+    tf.keras.layers.Conv2D(16, (3, 3), activation=tf.nn.relu, input_shape=(150, 150, 3)),
     tf.keras.layers.MaxPooling2D(2, 2),
     # 2
     tf.keras.layers.Conv2D(32, (3, 3), activation=tf.nn.relu),
@@ -79,13 +79,13 @@ validation_datagen = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1/2
 # flow training images in batches of 128
 train_generator = train_datagen.flow_from_directory(
     work_dir,               # directory with all images
-    target_size=(300, 300), # all images will be resized to ...
+    target_size=(150, 150), # all images will be resized to ...
     batch_size= 128,
     class_mode='binary'     # binary labels
 )
 validation_generator = validation_datagen.flow_from_directory(
     work_dir_validation,
-    target_size=(300, 300),
+    target_size=(150, 150),
     batch_size=32,
     class_mode='binary'
 )
@@ -95,7 +95,7 @@ def train():
     return model.fit(train_generator,
                      steps_per_epoch=8,
                      epochs=15,
-                     callbacks=[stopTraining(accuracy=0.9)],
+                     callbacks=[stopTraining(accuracy=0.98)],
                      verbose=1,
                      validation_data=validation_generator,
                      validation_steps=8)
