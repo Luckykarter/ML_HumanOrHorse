@@ -1,6 +1,7 @@
 import os
 import zipfile
 import random
+from printImages import printImages
 
 def getRandomItems(lst, number=1):
     return [random.choice(lst) for _ in range(number)]
@@ -15,14 +16,12 @@ def unZipAll(dir):
             zip_ref.extractall(new_dir)
             zip_ref.close()
 
-def getRandomItems(lst, number):
-    return [random.choice(lst) for _ in range(number)]
-
 # load images of humans and horses from ZIP-file
-def getData():
+def getData(unzipped = False):
     base_dir = 'resources'
     name_dir = 'horse-or-human'
-    unZipAll(base_dir)
+    if not unzipped:
+        unZipAll(base_dir)
 
     train_dir = os.path.join(base_dir, name_dir)
     validation_dir = os.path.join(base_dir, 'validation-' + name_dir)
@@ -54,3 +53,35 @@ def getUserFile():
           title="Choose image(s)",
           multiple=True
      )
+
+def showDatasetExamples(show: bool, number_of_images = 10):
+    if not show:
+        return
+    horse_dir, human_dir, horse_dir_validation, human_dir_validation = getData(unzipped=True)
+
+    horse_names = os.listdir(horse_dir)
+    human_names = os.listdir(human_dir)
+
+    horse_pics = [os.path.join(horse_dir, name)
+                  for name in getRandomItems(horse_names, number_of_images)]
+    human_pics = [os.path.join(human_dir, name)
+                  for name in getRandomItems(human_names, number_of_images)]
+
+    show_images = horse_pics + human_pics
+
+    printImages(show_images, "Random Training Images")
+
+    # display some validation images
+    horse_names = os.listdir(horse_dir_validation)
+    human_names = os.listdir(human_dir_validation)
+    horse_pics = [os.path.join(horse_dir_validation, name)
+                  for name in getRandomItems(horse_names, number_of_images)]
+
+    human_pics = [os.path.join(human_dir_validation, name)
+                  for name in getRandomItems(human_names, number_of_images)]
+
+    show_images = horse_pics + human_pics
+
+    printImages(show_images, "Random Validation Images")
+
+

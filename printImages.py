@@ -6,7 +6,7 @@ import random
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import tensorflow as tf
 
-def printImages(images, title):
+def printImages(images, title, img_titles = None):
     ncols = ceil(sqrt(len(images)))
     nrows = ceil(len(images) / ncols)
 
@@ -16,7 +16,10 @@ def printImages(images, title):
 
     for i, img_path in enumerate(images):
         # set up subplot
-        sp = plt.subplot(nrows, ncols, i + 1)
+        sp = plt.subplot(nrows, ncols, i + 1 )
+        if img_titles:
+            sp.set_title(img_titles[i])
+
         sp.axis('Off')
 
         img = mpimg.imread(img_path)
