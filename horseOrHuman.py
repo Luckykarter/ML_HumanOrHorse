@@ -7,7 +7,7 @@ from numba import jit, cuda
 from stopTraining import stopTraining
 from keras_preprocessing import image
 
-SHOW_DATASET_EXAMPLE = True
+SHOW_DATASET_EXAMPLE = False
 horse_dir, human_dir, horse_dir_validation, human_dir_validation = getData()
 work_dir = os.path.dirname(horse_dir)
 work_dir_validation = os.path.dirname(horse_dir_validation)
