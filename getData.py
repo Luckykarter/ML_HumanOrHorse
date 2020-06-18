@@ -2,7 +2,6 @@ import os
 import random
 import zipfile
 
-# Helper functions for getting
 def getRandomItems(lst, number=1):
     return [random.choice(lst) for _ in range(number)]
 
