@@ -1,14 +1,14 @@
-from getData import getData, getUserFile
+from getdata import get_data, get_user_file
 import os
-from printImages import printImages, printIntermediateRepresentations, showDatasetExamples
+from printimages import print_images, print_intermediate_representations, show_dataset_examples
 import tensorflow as tf
 import numpy as np
 from numba import jit, cuda
-from stopTraining import stopTraining
+from stoptraining import StopTraining
 from keras_preprocessing import image
 
 SHOW_DATASET_EXAMPLE = False
-horse_dir, human_dir, horse_dir_validation, human_dir_validation = getData()
+horse_dir, human_dir, horse_dir_validation, human_dir_validation = get_data()
 work_dir = os.path.dirname(horse_dir)
 work_dir_validation = os.path.dirname(horse_dir_validation)
 print('total training horse images:', len(os.listdir(horse_dir)))
@@ -17,7 +17,7 @@ print('total validation horse images:', len(os.listdir(horse_dir_validation)))
 print('total validation human images:', len(os.listdir(human_dir_validation)))
 
 # display dataset examples
-showDatasetExamples(SHOW_DATASET_EXAMPLE)
+show_dataset_examples(SHOW_DATASET_EXAMPLE)
 
 model = tf.keras.models.Sequential([
     # 1
@@ -72,18 +72,18 @@ def train():
     return model.fit(train_generator,
                      steps_per_epoch=8,
                      epochs=15,
-                     callbacks=[stopTraining(accuracy=0.98)],
+                     callbacks=[StopTraining(accuracy=0.98)],
                      verbose=1,
                      validation_data=validation_generator,
                      validation_steps=8)
 
 @jit(target='cuda')
-def trainWithGPU():
+def train_with_gpu():
     print('Start training using GPU')
     train()
 
 try:
-    trainWithGPU()
+    train_with_gpu()
 except:
     print('Start training using CPU')
     train()
@@ -92,8 +92,8 @@ except:
 
 print("Recognize user images: ")
 
-img_paths = getUserFile()
-while(img_paths):
+img_paths = get_user_file()
+while img_paths:
     labels = list()
     for file in img_paths:
         img = image.load_img(
@@ -110,6 +110,6 @@ while(img_paths):
         else:
             # print(file + '\nis a horse')
             labels.append("Horse")
-    printImages(img_paths, "Neural network guesses", labels)
-    img_paths = getUserFile()
+    print_images(img_paths, "Neural network guesses", labels)
+    img_paths = get_user_file()
 

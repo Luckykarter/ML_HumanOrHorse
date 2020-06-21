@@ -5,10 +5,10 @@ import numpy as np
 import random
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import tensorflow as tf
-from getData import getData, getRandomItems
+from getdata import get_data, get_random_items
 import os
 
-def printImages(images, title, img_titles = None):
+def print_images(images, title, img_titles = None):
     ncols = ceil(sqrt(len(images)))
     nrows = ceil(len(images) / ncols)
 
@@ -28,7 +28,7 @@ def printImages(images, title, img_titles = None):
         plt.imshow(img)
     plt.show()
 
-def printIntermediateRepresentations(images, model):
+def print_intermediate_representations(images, model):
     successive_outputs = [layer.output for layer in model.layers[1:]]
     visualization_model = tf.keras.models.Model(
         inputs=model.input,
@@ -66,33 +66,33 @@ def printIntermediateRepresentations(images, model):
             plt.imshow(display_grid)
     plt.show()
 
-def showDatasetExamples(show: bool, number_of_images = 10):
+def show_dataset_examples(show: bool, number_of_images = 10):
     if not show:
         return
-    horse_dir, human_dir, horse_dir_validation, human_dir_validation = getData(unzipped=True)
+    horse_dir, human_dir, horse_dir_validation, human_dir_validation = get_data(unzipped=True)
 
     horse_names = os.listdir(horse_dir)
     human_names = os.listdir(human_dir)
 
     horse_pics = [os.path.join(horse_dir, name)
-                  for name in getRandomItems(horse_names, number_of_images)]
+                  for name in get_random_items(horse_names, number_of_images)]
     human_pics = [os.path.join(human_dir, name)
-                  for name in getRandomItems(human_names, number_of_images)]
+                  for name in get_random_items(human_names, number_of_images)]
 
     show_images = horse_pics + human_pics
 
-    printImages(show_images, "Random Training Images")
+    print_images(show_images, "Random Training Images")
 
     # display some validation images
     horse_names = os.listdir(horse_dir_validation)
     human_names = os.listdir(human_dir_validation)
     horse_pics = [os.path.join(horse_dir_validation, name)
-                  for name in getRandomItems(horse_names, number_of_images)]
+                  for name in get_random_items(horse_names, number_of_images)]
 
     human_pics = [os.path.join(human_dir_validation, name)
-                  for name in getRandomItems(human_names, number_of_images)]
+                  for name in get_random_items(human_names, number_of_images)]
 
     show_images = horse_pics + human_pics
 
-    printImages(show_images, "Random Validation Images")
+    print_images(show_images, "Random Validation Images")
 

@@ -1,6 +1,6 @@
 from tensorflow.keras.callbacks import Callback
 
-class stopTraining(Callback):
+class StopTraining(Callback):
     def __init__(self, accuracy):
         super().__init__()
         self.accuracy = accuracy

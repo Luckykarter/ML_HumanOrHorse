@@ -2,10 +2,10 @@ import os
 import random
 import zipfile
 
-def getRandomItems(lst, number=1):
+def get_random_items(lst, number=1):
     return [random.choice(lst) for _ in range(number)]
 
-def unZipAll(dir):
+def _unzip_all(dir):
     for path in os.listdir(dir):
         s_path = os.path.splitext(path)
         if s_path[1].lower() == '.zip':
@@ -16,11 +16,11 @@ def unZipAll(dir):
             zip_ref.close()
 
 # load images of humans and horses from ZIP-file
-def getData(unzipped = False):
+def get_data(unzipped = False):
     base_dir = 'resources'
     name_dir = 'horse-or-human'
     if not unzipped:
-        unZipAll(base_dir)
+        _unzip_all(base_dir)
 
     train_dir = os.path.join(base_dir, name_dir)
     validation_dir = os.path.join(base_dir, 'validation-' + name_dir)
@@ -38,7 +38,7 @@ def getData(unzipped = False):
 # from tkinter import filedialog
 import easygui
 
-def getUserFile():
+def get_user_file():
 # this does not work well - hangs the script
 #     root = tk.Tk()
 #     root.withdraw()
